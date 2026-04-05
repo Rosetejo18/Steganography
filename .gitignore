@@ -1,0 +1,47 @@
+# ----------------------------
+# Python cache
+# ----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ----------------------------
+# Virtual environment (if used)
+# ----------------------------
+venv/
+env/
+.venv/
+
+# ----------------------------
+# System files
+# ----------------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------------
+# VS Code settings (optional)
+# ----------------------------
+.vscode/
+
+# ----------------------------
+# Generated output files
+# ----------------------------
+output.png
+recovered.txt
+temp.png
+
+# ----------------------------
+# Secret / sensitive files
+# ----------------------------
+secret.key
+
+# ----------------------------
+# Optional: ignore all test images except input
+# ----------------------------
+# *.png
+# !input.png
+
+# ----------------------------
+# Logs
+# ----------------------------
+*.log
