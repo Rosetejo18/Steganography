@@ -59,29 +59,33 @@ def encode_histogram(image_path, file_path, output_image, key_file="secret.key")
 
     while i < len(flat) - 1 and data_index < len(full_data):
 
-    p1 = int(flat[i])
-    p2 = int(flat[i + 1])
-
-    if abs(p1 - p2) <= 2:
-        i += 2
-        continue
-
-    bit = int(full_data[data_index])
-    avg = (p1 + p2) // 2
-
-    if bit == 0:
-        new_p1 = avg
-        new_p2 = avg - 1
-    else:
-        new_p1 = avg + 1
-        new_p2 = avg - 1
-
-    if 0 <= new_p1 <= 255 and 0 <= new_p2 <= 255:
+        p1 = int(flat[i])
+        p2 = int(flat[i + 1])
+    
+        if abs(p1 - p2) <= 2:
+            i += 2
+            continue
+    
+        avg = (p1 + p2) // 2
+    
+        if avg < 1 or avg > 254:
+            i += 2
+            continue
+    
+        bit = int(full_data[data_index])
+    
+        if bit == 0:
+            new_p1 = avg
+            new_p2 = avg - 1
+        else:
+            new_p1 = avg + 1
+            new_p2 = avg - 1
+    
         flat[i] = new_p1
         flat[i + 1] = new_p2
         data_index += 1
-
-    i += 2
+    
+        i += 2
 
     stego = flat.reshape(img.shape)
 
@@ -106,21 +110,21 @@ def decode_histogram(stego_image, output_file, key_file="secret.key"):
 
     while i < len(flat) - 1:
 
-    p1 = int(flat[i])
-    p2 = int(flat[i + 1])
-
-    if abs(p1 - p2) <= 2:
+        p1 = int(flat[i])
+        p2 = int(flat[i + 1])
+    
+        if abs(p1 - p2) <= 2:
+            i += 2
+            continue
+    
+        diff = p1 - p2
+    
+        if diff == 1:
+            extracted_bits += "0"
+        elif diff == 2:
+            extracted_bits += "1"
+    
         i += 2
-        continue
-
-    diff = p1 - p2
-
-    if diff == 1:
-        extracted_bits += "0"
-    elif diff == 2:
-        extracted_bits += "1"
-
-    i += 2
 
     length = int(extracted_bits[:32], 2)
 
