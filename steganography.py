@@ -62,7 +62,6 @@ def encode_histogram(image_path, file_path, output_image, key_file="secret.key")
     p1 = int(flat[i])
     p2 = int(flat[i + 1])
 
-    # Skip unsafe pairs
     if abs(p1 - p2) <= 2:
         i += 2
         continue
